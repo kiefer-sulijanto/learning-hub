@@ -1,0 +1,10 @@
+dolphin.svg|Dolphin|correct
+shark.svg|Turtle|incorrect
+turtle.svg|Turtle|correct
+octopus.svg|Seahorse|incorrect
+jellyfish.svg|Jellyfish|correct
+whale.svg|Shark|incorrect
+starfish.svg|Starfish|correct
+seahorse.svg|Whale|incorrect
+dolphin.svg|Shark|incorrect
+whale.svg|Whale|correct
