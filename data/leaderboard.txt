@@ -1,0 +1,4 @@
+Adam|3
+Sandy|-1
+Kevin|4
+Zara|8

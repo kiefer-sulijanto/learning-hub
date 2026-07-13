@@ -10,11 +10,11 @@ if (!in_array($topic, ['math', 'seaworld'], true)) {
 
 if ($topic === 'math') {
     $pool = load_math_questions();
-    $questions = get_math_quiz_questions($pool);
 } else {
     $pool = load_seaworld_questions();
-    $questions = get_random_questions($pool, 3);
 }
+
+$questions = get_random_questions($pool, 3);
 
 $_SESSION['current_quiz'] = [
     'topic' => $topic,
@@ -41,8 +41,7 @@ require __DIR__ . '/includes/layout_top.php';
 
                 <?php if ($topic === 'math'): ?>
                     <?php
-                    $displayEquation = str_replace(['*', '/'], ['×', '÷'], $q['equation']);
-                    $displayEquation = preg_replace('/([0-9])([+\-×÷])([0-9])/u', '$1 $2 $3', $displayEquation);
+                    $displayEquation = preg_replace('/([0-9])([+\-])([0-9])/', '$1 $2 $3', $q['equation']);
                     ?>
                     <div class="equation-row">
                         <span class="equation"><?= h($displayEquation) ?> =</span>

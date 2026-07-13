@@ -10,8 +10,8 @@ define('LEADERBOARD_FILE', DATA_DIR . 'leaderboard.txt');
 
 /**
  * Load the math question pool.
- * Each line: equation|answer (operator is one of + - * /)
- * @return array<int, array{equation:string, answer:int, operator:string}>
+ * Each line: equation|answer
+ * @return array<int, array{equation:string, answer:int}>
  */
 function load_math_questions(): array {
     $questions = [];
@@ -24,47 +24,12 @@ function load_math_questions(): array {
         if (count($parts) !== 2) {
             continue;
         }
-        if (!preg_match('/(?<=\d)([+\-*\/])(?=\d)/', $parts[0], $m)) {
-            continue;
-        }
         $questions[] = [
             'equation' => $parts[0],
             'answer' => (int)$parts[1],
-            'operator' => $m[1],
         ];
     }
     return $questions;
-}
-
-/**
- * Build a 3-question math quiz that always includes at least one addition
- * and one subtraction question (per the assignment brief), plus one "free"
- * question from any other operator (multiplication/division) for variety.
- */
-function get_math_quiz_questions(array $pool): array {
-    $byOperator = ['+' => [], '-' => [], 'other' => []];
-    foreach ($pool as $q) {
-        $key = in_array($q['operator'], ['+', '-'], true) ? $q['operator'] : 'other';
-        $byOperator[$key][] = $q;
-    }
-
-    $selected = [];
-    foreach (['+', '-', 'other'] as $key) {
-        if (!empty($byOperator[$key])) {
-            $selected[] = $byOperator[$key][array_rand($byOperator[$key])];
-        }
-    }
-
-    if (count($selected) < 3) {
-        $remaining = array_udiff($pool, $selected, function ($a, $b) {
-            return $a['equation'] <=> $b['equation'];
-        });
-        $needed = 3 - count($selected);
-        $selected = array_merge($selected, get_random_questions(array_values($remaining), $needed));
-    }
-
-    shuffle($selected);
-    return $selected;
 }
 
 /**

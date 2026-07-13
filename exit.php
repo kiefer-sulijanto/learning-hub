@@ -10,9 +10,6 @@ if (empty($_SESSION['recorded'])) {
     $_SESSION['recorded'] = true;
 }
 
-$leaderboard = load_leaderboard();
-$allTimePoints = $leaderboard[$nickname] ?? $gamePoints;
-
 $pageTitle = 'Game Over';
 require __DIR__ . '/includes/layout_top.php';
 ?>
@@ -20,14 +17,10 @@ require __DIR__ . '/includes/layout_top.php';
     <h1>Thanks for playing, <?= h($nickname) ?></h1>
     <p class="subtitle">Your score has been saved to the leaderboard.</p>
 
-    <div class="stats-grid">
+    <div class="stats-grid" style="grid-template-columns: 1fr;">
         <div class="stat-box stat-points">
             <span class="stat-value"><?= $gamePoints ?></span>
             <span class="stat-label">Points This Game</span>
-        </div>
-        <div class="stat-box stat-overall">
-            <span class="stat-value"><?= $allTimePoints ?></span>
-            <span class="stat-label">Overall Points (All Games)</span>
         </div>
     </div>
 
